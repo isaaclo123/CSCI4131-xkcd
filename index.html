@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>XKCD Password Generator</title>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all">
+    <script src="script.js" charset="utf-8"></script>
+  </head>
+  <body id="root">
+    <h1>XKCD Password Generator</h1>
+
+    Min Word Length: <input type="number" name="minwordlength" id="minwordlength">
+    <br>
+    Max Word Length: <input type="number" name="maxwordlength" id="maxwordlength">
+    <br>
+    Max Length: <input type="number" name="maxlength" id="maxlength">
+    <br>
+
+    Easytype: <input type="checkbox" name="easytype" id="easytype">
+    <br>
+    Numbersub: <input type="checkbox" name="numbersub" id="numbersub">
+    <br>
+
+    Num Passwords: <input type="number" name="numpasswords" id="numpasswords">
+    <br>
+    Num Words: <input type="number" name="numwords" id="numwords">
+    <br>
+
+
+    <button id="submit">Submit</button>
+
+    <h2>Possible Passwords</h2>
+
+    <div id="passwordtable"></div>
+  </body>
+</html>
