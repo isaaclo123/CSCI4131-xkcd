@@ -23,10 +23,6 @@ function sum(list) {
   return list.reduce(function(a, b) {return a + b}, 0)
 }
 
-function rand() {
-  return Math.floor(Math.random() * (window.data.maxwordlength - window.data.minwordlength) + window.data.minwordlength);
-}
-
 function pickRandWithIndex(index) {
   let newindex = index;
   if (index < minwordlength) {
@@ -42,19 +38,6 @@ function pickRandWithIndex(index) {
   return list[Math.floor(Math.random()*list.length)];
 }
 
-// function allPossible() {
-//   function helper(list) {
-//     return
-//
-//   }
-//   const min = window.data.minwordlength;
-//   const max = window.data.maxwordlength;
-//   const maxlen = window.data.maxlength;
-//   const numwords = window.data.numwords;
-//
-//   allPossible()
-// }
-
 function randGen() {
   let randlist = [Infinity];
   let thesum = sum(randlist);
@@ -63,7 +46,10 @@ function randGen() {
     randlist = [];
 
     for (let i = 0; i < window.data.numwords; i = i + 1) {
-      const newRandWord = pickRandWithIndex(rand());
+      const randnum = Math.floor(Math.random() *
+        (window.data.maxwordlength - window.data.minwordlength) + window.data.minwordlength)
+      const newRandWord = pickRandWithIndex(randnum);
+
       console.log(newRandWord);
       randlist = randlist.concat(newRandWord);
     }
@@ -151,7 +137,7 @@ function wordsToDict(words) {
 }
 
 function setup(data) {
-  Object.keys(data).forEach(function(key) {
+  Object.keys(data).forEach(function (key) {
     const elem = document.getElementById(key);
     if (elem === undefined || elem === null) {
       return;
@@ -179,7 +165,7 @@ function main() {
     window.min = dict.min;
     console.log(dict);
   }).then(function() {
-    root.style.display = "block";
+    root.style.display = "grid";
   })
 }
 

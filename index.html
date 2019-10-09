@@ -8,30 +8,36 @@
     <script src="script.js" charset="utf-8"></script>
   </head>
   <body id="root">
-    <h1>XKCD Password Generator</h1>
+    <header>
+      <h1>XKCD Password Generator</h1>
+    </header>
 
-    Min Word Length: <input type="number" name="minwordlength" id="minwordlength">
-    <br>
-    Max Word Length: <input type="number" name="maxwordlength" id="maxwordlength">
-    <br>
-    Max Length: <input type="number" name="maxlength" id="maxlength">
-    <br>
+    <figure>Min Word Length</figure>
+    <input type="number" name="minwordlength" id="minwordlength">
 
-    Easytype: <input type="checkbox" name="easytype" id="easytype">
-    <br>
-    Numbersub: <input type="checkbox" name="numbersub" id="numbersub">
-    <br>
+    <figure>Max Word Length</figure>
+    <input type="number" name="maxwordlength" id="maxwordlength">
 
-    Num Passwords: <input type="number" name="numpasswords" id="numpasswords">
-    <br>
-    Num Words: <input type="number" name="numwords" id="numwords">
-    <br>
+    <figure>Max Length</figure>
+    <input type="number" name="maxlength" id="maxlength">
 
+    <figure>Easytype</figure>
+    <input type="checkbox" name="easytype" id="easytype">
+
+    <figure>Numbersub</figure>
+    <input type="checkbox" name="numbersub" id="numbersub">
+
+    <figure>Num Passwords</figure>
+    <input type="number" name="numpasswords" id="numpasswords">
+
+    <figure>Num Words</figure>
+    <input type="number" name="numwords" id="numwords">
 
     <button id="submit">Submit</button>
 
-    <h2>Possible Passwords</h2>
-
-    <div id="passwordtable"></div>
+    <section>
+      <h2>Possible Passwords</h2>
+      <div id="passwordtable">None Yet</div>
+    </section>
   </body>
 </html>
