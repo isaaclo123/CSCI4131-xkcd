@@ -1,4 +1,10 @@
+const DEBUG = false;
 const WORDS = "https://raw.githubusercontent.com/CodeBrauer/1000-most-common-words/master/1000-common-english-words.txt";
+
+if (!DEBUG) {
+  // :o i cant believe this works
+  console.log = function() {};
+}
 
 window.data = {
   numpasswords: 10,
