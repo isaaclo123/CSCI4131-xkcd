@@ -10,6 +10,43 @@ window.data = {
   numbersub: false,
 }
 
+const NUMBER_DICT = {
+  "a": 4,
+  "b": 6,
+  "o": 0,
+  "i": 1,
+  "e": 3,
+  "s": 5,
+}
+
+function numberSub(word) {
+  const chars = word.toLowerCase().split("");
+
+  return chars.map(function(cur) {
+    if (cur in NUMBER_DICT) {
+      return NUMBER_DICT[cur];
+    }
+    return cur;
+  }).join("");
+}
+
+function doubleLetter(words) {
+  return words.filter(function(word) {
+    const chars = word.toLowerCase().split("");
+
+    let prev = chars[0];
+    for (let i = 1; i < chars.length; i = i + 1) {
+      if (prev == chars[i]) {
+      console.log("true");
+        return true;
+      }
+      prev = chars[i];
+    }
+      console.log("false");
+    return false;
+  });
+}
+
 function getWords(words) {
   return fetch(words)
     .then(function (response) {
@@ -46,8 +83,9 @@ function randGen() {
     randlist = [];
 
     for (let i = 0; i < window.data.numwords; i = i + 1) {
+      // inclusive rand from a <= x <= b
       const randnum = Math.floor(Math.random() *
-        (window.data.maxwordlength - window.data.minwordlength) + window.data.minwordlength)
+        (window.data.maxwordlength + 1 - window.data.minwordlength) + window.data.minwordlength)
       const newRandWord = pickRandWithIndex(randnum);
 
       console.log(newRandWord);
@@ -60,10 +98,20 @@ function randGen() {
   return randlist;
 }
 
-function tableGen(data) {
+function tableGen(data, options) {
+  if (typeof options === "undefined") {
+    options = [];
+  }
+
   const tableContent = data.reduce(function (acc, col) {
     const row = col.reduce(function (acc, cell) {
-      return acc + "<td>" + cell + "</td>";
+
+      // apply function list to cell
+      const cellnew = options.reduce(function (acc, fun) {
+        return fun(acc)
+      }, cell);
+
+      return acc + "<td>" + cellnew + "</td>";
     }, "")
     return acc + "<tr>" + row + "</tr>";
   }, "")
@@ -71,6 +119,9 @@ function tableGen(data) {
 }
 
 function setTable() {
+  // use proper dict
+  window.dict = (window.data.easytype) ? window.dict_easy : window.dict_full;
+
   if (window.data.numwords * window.data.minwordlength > window.data.maxlength) {
     alert("Not Possible");
     return;
@@ -82,7 +133,9 @@ function setTable() {
     return randGen();
   })
 
-  document.getElementById("passwordtable").innerHTML = tableGen(tableList);
+  // apply numberSub if neccesary
+  const tablevalues = tableGen(tableList, (window.data.numbersub) ? [numberSub] : []);
+  document.getElementById("passwordtable").innerHTML = tablevalues;
 }
 
 function onChange() {
@@ -155,12 +208,17 @@ function main() {
   const submit = document.getElementById("submit");
   submit.onclick = setTable;
 
+  console.log(numberSub("hello"));
+
   setup(data);
 
   getWords(WORDS).then(function(data) {
-    const dict = wordsToDict(data);
+    const dict_easy = wordsToDict(doubleLetter(data));
+    const dict_full = wordsToDict(data);
 
-    window.dict = dict.dict;
+    window.dict_easy = dict_easy.dict;
+    window.dict_full = dict_full.dict;
+    window.dict = window.dict_full;
     window.max = dict.max;
     window.min = dict.min;
     console.log(dict);
