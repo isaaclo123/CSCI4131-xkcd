@@ -56,6 +56,13 @@ function getWords(words) {
     });
 }
 
+function rand(minimum, maximum) {
+  const min = Math.ceil(minimum);
+  const max = Math.floor(maximum);
+  //The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 function sum(list) {
   return list.reduce(function(a, b) {return a + b}, 0)
 }
@@ -72,7 +79,7 @@ function pickRandWithIndex(index) {
   console.log(newindex);
   const list = window.dict[newindex];
 
-  return list[Math.floor(Math.random()*list.length)];
+  return list[rand(0, list.length)];
 }
 
 function randGen() {
@@ -84,8 +91,7 @@ function randGen() {
 
     for (let i = 0; i < window.data.numwords; i = i + 1) {
       // inclusive rand from a <= x <= b
-      const randnum = Math.floor(Math.random() *
-        (window.data.maxwordlength + 1 - window.data.minwordlength) + window.data.minwordlength)
+      const randnum = rand(window.data.minwordlength, window.data.maxwordlength + 1);
       const newRandWord = pickRandWithIndex(randnum);
 
       console.log(newRandWord);
@@ -122,7 +128,8 @@ function setTable() {
   // use proper dict
   window.dict = (window.data.easytype) ? window.dict_easy : window.dict_full;
 
-  if (window.data.numwords * window.data.minwordlength > window.data.maxlength) {
+  if ((window.data.numwords * window.data.minwordlength > window.data.maxlength)
+    || (window.data.maxlength < window.data.minwordlength)) {
     alert("Not Possible");
     return;
   }
@@ -146,6 +153,9 @@ function onChange() {
       window.data[key] = this.checked;
       break;
     default:
+      if (this.value <= 0) {
+        this.value = 1;
+      }
       window.data[key] = this.value;
   }
 }
